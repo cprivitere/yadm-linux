@@ -7,3 +7,5 @@ brew install tmux
 brew install telegram
 brew install iterm2
 brew install fzf
+brew install kubernetes-cli
+brew install kubectx
