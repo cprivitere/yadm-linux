@@ -6,10 +6,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/go/bin:/usr/local/opt/ruby@2.7/bin:$PATH
+export PATH=$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/cprivitere/.oh-my-zsh"
+export ZSH="/home/cprivitere/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git golang iterm2 tmux fzf)
+plugins=(vi-mode git golang iterm2 tmux fzf kubectl brew)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -89,11 +89,12 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+#if [[ -n $SSH_CONNECTION ]]; then
+#  export EDITOR='vim'
+#else
+#  export EDITOR='mvim'
+#fi
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -110,6 +111,19 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 [ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
+#
+# If there's already a kubeconfig file in ~/.kube/config it will import that too and all the contexts
+DEFAULT_KUBECONFIG_FILE="$HOME/.kube/config"
+if test -f "${DEFAULT_KUBECONFIG_FILE}"
+then
+  export KUBECONFIG="$DEFAULT_KUBECONFIG_FILE"
+fi
+# Your additional kubeconfig files should be inside ~/.kube/config-files
+OIFS="$IFS"
+IFS=$'\n'
+for kubeconfigFile in `find "$HOME/.kube/" -type f -name "kubeconfig.*.yml" -o -name "kubeconfig.*.yaml"`
+do
+  export KUBECONFIG="$kubeconfigFile:$KUBECONFIG"
+done
+IFS="$OIFS"
