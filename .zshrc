@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:/home/linuxbrew/.linuxbrew/bin:$PATH
+export PATH=/home/linuxbrew/.linuxbrew/opt/go@1.17/bin:$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/cprivitere/.oh-my-zsh"
@@ -107,6 +107,8 @@ export EDITOR='vim'
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias kns=kubens
+alias kctx=kubectx
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -127,3 +129,7 @@ do
   export KUBECONFIG="$kubeconfigFile:$KUBECONFIG"
 done
 IFS="$OIFS"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/bit-git/1.1.2/bin/bit-git bit
+alias upallthethings="brew update;brew upgrade;omz update;cd ~/.oh-my-zsh/custom/themes/powerlevel10k;git pull;cd ~;omz reload"
