@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=/home/linuxbrew/.linuxbrew/opt/go@1.17/bin:$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:/home/linuxbrew/.linuxbrew/bin:$PATH
+export PATH=/home/linuxbrew/.linuxbrew/opt/python@3.9/libexec/bin:$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:/home/linuxbrew/.linuxbrew/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/cprivitere/.oh-my-zsh"
@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git golang iterm2 tmux fzf kubectl brew)
+plugins=(vi-mode git golang tmux fzf kubectl brew)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,5 +131,8 @@ done
 IFS="$OIFS"
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /home/linuxbrew/.linuxbrew/Cellar/bit-git/1.1.2/bin/bit-git bit
-alias upallthethings="brew update;brew upgrade;omz update;cd ~/.oh-my-zsh/custom/themes/powerlevel10k;git pull;cd ~;omz reload"
+source <(stern --completion=zsh)
+alias upallthethings="brew update;brew outdated;brew upgrade;brew cleanup;cd ~/.oh-my-zsh/custom/themes/powerlevel10k;git pull;cd ~;omz update;omz reload"
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export LD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:$LD_LIBRARY_PATH"
