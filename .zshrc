@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git golang tmux fzf kubectl brew)
+plugins=(vi-mode git golang tmux fzf kubectl brew jq)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -121,10 +121,10 @@ if test -f "${DEFAULT_KUBECONFIG_FILE}"
 then
   export KUBECONFIG="$DEFAULT_KUBECONFIG_FILE"
 fi
-# Your additional kubeconfig files should be inside ~/.kube/config-files
+# Your additional kubeconfig files should be inside ~/.kube/
 OIFS="$IFS"
 IFS=$'\n'
-for kubeconfigFile in `find "$HOME/.kube/" -type f -name "kubeconfig.*.yml" -o -name "kubeconfig.*.yaml"`
+for kubeconfigFile in `find "$HOME/.kube/" -type f -name "kubeconfig.*.yml" -o -name "kubeconfig.*.yaml" -o -name "config.*.yaml"`
 do
   export KUBECONFIG="$kubeconfigFile:$KUBECONFIG"
 done
@@ -136,3 +136,4 @@ alias upallthethings="brew update;brew outdated;brew upgrade;brew cleanup;cd ~/.
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export LD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:$LD_LIBRARY_PATH"
+bindkey ^j jq-complete
