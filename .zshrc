@@ -132,6 +132,7 @@ IFS="$OIFS"
 
 autoload -U +X bashcompinit && bashcompinit
 source <(stern --completion=zsh)
+source <(clusterctl completion zsh)
 alias upallthethings="brew update;brew outdated;brew upgrade;brew cleanup;cd ~/.oh-my-zsh/custom/themes/powerlevel10k;git pull;cd ~;omz update;omz reload"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
