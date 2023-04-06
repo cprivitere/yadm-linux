@@ -11,11 +11,16 @@
 
 # --- COMMIT END ---
 # Type can be
-#    feat     (new feature)
-#    fix      (bug fix)
-#    refactor (refactoring production code)
+#    breaking (breaking changes)
+#    feat     (new features)
+#    perf     (performance improvements)
+#    revert   (reverts)
+#    fix      (bug fixes)
+#    docs     (changes to documentation)
 #    style    (formatting, missing semi colons, etc; no code change)
-#    doc      (changes to documentation)
+#    refactor (refactoring production code)
+#    build    (builds)
+#    ci       (continuous integration)
 #    test     (adding or refactoring tests; no production code change)
 #    chore    (updating grunt tasks etc; no production code change)
 # --------------------
