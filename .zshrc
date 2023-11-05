@@ -77,7 +77,7 @@ DISABLE_MAGIC_FUNCTIONS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew kubectl git vi-mode aliases common-aliases docker fzf gh httpie golang terraform tmux vscode zsh-autosuggestions fast-syntax-highlighting zsh-autocomplete)
+plugins=(brew kubectl git vi-mode aliases common-aliases docker fzf gh httpie golang terraform tmux vscode zsh-autosuggestions fast-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -111,10 +111,10 @@ alias kns=kubens
 alias kctx=kubectx
 
 [ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
-#
 
 #Update brew and shell stuff
-alias upallthethings="brew update;brew outdated;brew upgrade;brew cleanup;cd ~/.oh-my-zsh/custom/themes/powerlevel10k;git pull;cd ~;omz update;omz reload"
+alias upallthethings="brew update;brew outdated;brew upgrade;brew cleanup;cd ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting;git pull;cd ~/.oh-my-zsh/custom/plugins/zsh-autocomplete;git pull;cd ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions;git pull;cd ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting;git pull;cd ~/.oh-my-zsh/custom/themes/powerlevel10k;git pull;cd ~;omz update;omz reload"
+
 
 # If there's already a kubeconfig file in ~/.kube/config it will import that too and all the contexts
 DEFAULT_KUBECONFIG_FILE="$HOME/.kube/config"
