@@ -99,22 +99,17 @@ export EDITOR='vim'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias kns=kubens
-alias kctx=kubectx
-
-[ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
-
-#Update brew and shell stuff
-alias upallthethings="brew update;brew outdated;brew upgrade;brew cleanup;cd ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting;git pull;cd ~/.oh-my-zsh/custom/plugins/zsh-autocomplete;git pull;cd ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions;git pull;cd ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting;git pull;cd ~/.oh-my-zsh/custom/themes/powerlevel10k;git pull;cd ~;omz update;omz reload"
-
 
 # If there's already a kubeconfig file in ~/.kube/config it will import that too and all the contexts
 DEFAULT_KUBECONFIG_FILE="$HOME/.kube/config"
