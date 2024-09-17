@@ -29,7 +29,7 @@ if [[ ! -e ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-autocomplete ]]; t
 fi
 if [[ ! -e ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/themes/powerlevel10k ]]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/themes/powerlevel10k
-  make -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/powerlevel10k pkg
+  make -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/themes/powerlevel10k pkg
 fi
 
 autoload -Uz compinit
