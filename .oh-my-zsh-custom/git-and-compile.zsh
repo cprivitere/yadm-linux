@@ -39,6 +39,12 @@ compinit -C
 #[[ ~/.zshenv.zwc    -nt ~/.zshenv    ]] || zcompile-many ~/.zshenv
 [[ ~/.zshrc.zwc     -nt ~/.zshrc     ]] || zcompile-many ~/.zshrc
 [[ ~/.p10k.zsh.zwc  -nt ~/.p10k.zsh  ]] || zcompile-many ~/.p10k.zsh
+[[ ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh.zwc -nt ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] || zcompile-many ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-syntax-highlighting/{zsh-syntax-highlighting.zsh,highlighters/*/*.zsh}
+[[ ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh.zwc -nt ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]] || zcompile-many ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-autosuggestions/{zsh-autosuggestions.zsh,src/**/*.zsh}
+[[ ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh.zwc -nt ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ]] || zcompile-many ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 
+[[ ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh.zwc -nt ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]] || zcompile-many ${ZSH_CUSTOM:-$HOME/.oh-my-zsh-custom}/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+[[ ${ZSH:-$HOME/.oh-my-zsh}/oh-my-zsh.sh.zwc -nt ${ZSH:-$HOME/.oh-my-zsh}/oh-my-zsh.sh ]] || zcompile-many ${ZSH:-$HOME/.oh-my-zsh}/oh-my-zsh.sh
+
 unfunction zcompile-many
 
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
