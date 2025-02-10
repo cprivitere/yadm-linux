@@ -3,8 +3,9 @@ alias kns=kubens
 alias kctx=kubectx
 alias less="bat"
 alias cat="bat -pp"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export MANPAGER='nvim +Man!'
+#eval "$(batman --export-env)"
+export MANPAGER="env BATMAN_IS_BEING_MANPAGER=yes /bin/bash $HOMEBREW_PREFIX/bin/batman"
+export MANROFFOPT="-c"
 
 [ -f ~/.kubectl_aliases ] && source ~/.kubectl_aliases
 
