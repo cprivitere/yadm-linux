@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/cprivitere/.oh-my-zsh"
@@ -77,7 +77,7 @@ ZSH_CUSTOM=~/.oh-my-zsh-custom
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew kubectl git vi-mode aliases common-aliases docker fzf gh httpie golang terraform vscode zsh-autosuggestions fast-syntax-highlighting mise eza)
+plugins=(brew git vi-mode aliases common-aliases docker fzf gh httpie golang terraform zsh-autosuggestions fast-syntax-highlighting tmux mise kubectl uv eza)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -150,3 +150,5 @@ export TELEPORT_USE_LOCAL_SSH_AGENT=false
 
 # Disable errors for unmatched *
 setopt no_nomatch
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "/snap/code/current/usr/share/code/resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
