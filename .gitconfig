@@ -1,9 +1,3 @@
-[credential "https://github.com"]
-	helper = 
-	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
 [user]
 	name = Chris Privitere
 	email = 23177737+cprivitere@users.noreply.github.com
@@ -17,8 +11,6 @@
 	autostash = true
 [merge]
 	autostash = true
-[core]
-	editor = code --wait
 [commit]
     verbose = 2
     template = ~/.config/git/commit-template
@@ -29,3 +21,9 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential

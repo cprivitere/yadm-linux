@@ -80,7 +80,8 @@ _get_node_metadata_from_yanl() {
 # ============================================================================
 
 export TELEPORT_PROXY_NA="teleport.na.int.coreweave.com:443"
-export GOPRIVATE='github.com/coreweave/*,bsr.core-services.ingress.coreweave.com/gen/go'
+export TELEPORT_LOGIN_BIND_ADDR="localhost:8200"
+export GOPRIVATE='github.com/coreweave/*,bsr.core-services.ingress.coreweave.com/*'
 
 # cwctl completions are now sourced from ~/.oh-my-zsh-custom/completions/_cwctl
 # Generated via: update-completions or compilecustom
@@ -90,6 +91,54 @@ export GOPRIVATE='github.com/coreweave/*,bsr.core-services.ingress.coreweave.com
 
 alias intd="infractl nt delete --automerge"
 alias inta="infractl nt add --automerge"
+
+# VPN STUFF
+
+vpn-start() {
+  local VPN_CONFIG_FILE=${1:-~/.config/openvpn3/dev-cluster.ovpn}
+  [[ ! -e "$VPN_CONFIG_FILE" ]] &&
+    echo "VPN Config file not found: $VPN_CONFIG_FILE" && return 1
+  openvpn3 session-start --config "$VPN_CONFIG_FILE"
+}
+
+vpn-stop() {
+  for session_path in $(openvpn3 sessions-list | awk "{ if(\$0 ~ /Path:/){print \$2} else if(\$0 ~ /No sessions available/){print \"none\"} }"); do
+    if [[ "${session_path}" =~ ^none$ ]]; then
+      echo "No sessions available";
+    else echo openvpn3 session-manage --disconnect --session-path $session_path; openvpn3 session-manage --disconnect --session-path "${session_path}"
+    fi
+  done
+  openvpn3 session-manage --cleanup; unset session_path
+}
+
+vpn-list() {
+  openvpn3 sessions-list
+}
+
+vpn-reset() {
+  local session_path="$(openvpn3 sessions-list | awk "{ if(\$0 ~ /Path:/){print \$2} else if(\$0 ~ /No sessions available/){print \"none\"} }")"
+  if [[ "${session_path}" -eq "none" ]]; then
+    vpn-start
+  elif [[ $(echo "${session_path}" | wc -l) -eq 1 ]]; then
+    openvpn3 session-manage --restart --path "${session_path}"
+  else
+    vpn-stop && vpn-start
+  fi
+}
+
+vpn-set-ip() {
+    local IP=$1
+    local VPN_CONFIG_FILE=${2:-~/.config/openvpn3/dev-cluster.ovpn}
+    [[ -z "$IP" ]] && echo No IP given && return 1
+    [[ ! -e "$VPN_CONFIG_FILE" ]] &&
+      echo "VPN Config file not found: $VPN_CONFIG_FILE" && return 1
+    sed -E -i".bak" -e "s/^remote +([^ ]+)/remote $IP/" $VPN_CONFIG_FILE
+    grep "^remote $IP" $VPN_CONFIG_FILE || {
+        echo "IP Update Failed"
+        return 1
+    }
+}
+
 
 # ============================================================================
 # KUBERNETES NODE MANAGEMENT

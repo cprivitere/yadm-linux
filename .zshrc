@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.local/bin:$HOME/go/bin:/usr/lib/cargo/bin:/$HOME/.docker/cli-plugins:${HOME}/.krew/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/bin:$HOME/go/bin:$HOME/.docker/cli-plugins:${HOME}/.krew/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="${HOME}/.oh-my-zsh"
@@ -32,11 +32,11 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
+zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS="true"
@@ -77,7 +77,12 @@ ZSH_CUSTOM=~/.oh-my-zsh-custom
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew git vi-mode aliases common-aliases docker fzf gh httpie golang terraform zsh-autosuggestions fast-syntax-highlighting tmux mise kubectl uv eza)
+plugins=(brew git vi-mode aliases common-aliases docker fzf gh golang terraform tmux zsh-autosuggestions fast-syntax-highlighting mise eza uv helm kubectl)
+
+# Add zsh-completions to fpath BEFORE sourcing oh-my-zsh (to avoid double compinit)
+#fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/completions
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+typeset -U fpath  # Ensure no duplicates in fpath
 
 source $ZSH/oh-my-zsh.sh
 
@@ -111,6 +116,10 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+#iTerm integration
+#test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+#export COLORTERM="truecolor"
+
 # If there's already a kubeconfig file in ~/.kube/config it will import that too and all the contexts
 DEFAULT_KUBECONFIG_FILE="$HOME/.kube/config"
 if test -f "${DEFAULT_KUBECONFIG_FILE}"
@@ -118,37 +127,43 @@ then
   export KUBECONFIG="$DEFAULT_KUBECONFIG_FILE"
 fi
 # Your additional kubeconfig files should be inside ~/.kube/
-OIFS="$IFS"
-IFS=$'\n'
-for kubeconfigFile in `find "$HOME/.kube/" -type f -name "kubeconfig.*.yml" -o -name "kubeconfig.*.yaml" -o -name "config.*.yaml" -o -name "teleport-*.yaml"`
-do
+# Use zsh globbing instead of find - much faster, no external process
+for kubeconfigFile in ~/.kube/(dev-*.yaml|kubeconfig.*.yml|kubeconfig.*.yaml|config.*.yaml|teleport-*.yaml|oidc-*.yaml)(N); do
   export KUBECONFIG="$kubeconfigFile:$KUBECONFIG"
 done
-IFS="$OIFS"
 
-#Completion stuff
-#autoload -U +X bashcompinit && bashcompinit
-#source <(stern --completion=zsh)
-#source <(clusterctl completion zsh)
+# Completion stuff
+# Uncomment if you need bash completions for tools that don't have zsh completions
+# autoload -U +X bashcompinit && bashcompinit
 
-#iTerm integration
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-#export COLORTERM="truecolor"
+# Tool-specific completions (uncomment as needed)
+# source <(stern --completion=zsh)
+# source <(clusterctl completion zsh)
+
+# Enhanced completion styling
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"  # Use LS_COLORS for file completions
+zstyle ':completion:*' group-name ''                      # Group completions by type
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'  # Add category headers
 
 #Something to import libraries from homebrew
 #export LD_LIBRARY_PATH="$HOMEBREW_PREFIX/lib:$LD_LIBRARY_PATH"
-#export HOMEBREW_GITHUB_API_TOKEN=
+export HOMEBREW_GITHUB_API_TOKEN=
 
 # No, Homebrew
 export HOMEBREW_NO_ANALYTICS=1
 
-# Disable teleport ssh agent stuff
+# Disable teleport SSH agent stuff
 export TELEPORT_USE_LOCAL_SSH_AGENT=false
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Disable errors for unmatched *
+# Disable error on unmatched *
 setopt no_nomatch
 
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "/snap/code/current/usr/share/code/resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
+#[[ "$TERM_PROGRAM" == "vscode" ]] && . "/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
+
+# Change zsh autosuggestions behavior to only trigger on manual rebind (e.g. Ctrl+Space) ??
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+CGO_ENABLED=0
+export NODE_EXTRA_CA_CERTS="/etc/ssl/certs/ca-certificates.crt"

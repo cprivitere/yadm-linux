@@ -148,6 +148,15 @@ upallthethings() {
   echo -e "\n=== Updating oh-my-zsh ==="
   cd ~ && omz update
 
+  echo -e "\n=== Updating mise ==="
+  cd ~ && mise up
+
+  echo -e "\n=== Updating gup ==="
+  cd ~ && gup update
+
+  echo -e "\n=== Updating cw ==="
+  cd ~ && cw update
+
   echo -e "\n=== Recompiling everything ==="
   compilecustom
 
