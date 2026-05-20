@@ -8,8 +8,9 @@ alias kns=kubens
 alias kctx=kubectx
 alias cat='bat --paging=never -p'
 node-root() {
+  _node="${1:?Usage: node_root <node-name>}"
   kubectl run node-root --restart=Never --rm -it --image=alpine --privileged \
-    --overrides '{"spec":{"hostPID":true}}' \
+    --overrides "{\"spec\":{\"hostPID\":true,\"nodeName\":\"${_node}\"}}" \
     --override-type=merge \
     --command -- nsenter --mount=/proc/1/ns/mnt -- /bin/bash
 }

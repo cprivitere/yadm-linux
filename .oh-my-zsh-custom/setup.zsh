@@ -99,9 +99,6 @@ upallthethings() {
     echo -e "\n=== Updating plugins ==="
     _for_each_plugin update
 
-    echo -e "\n=== Updating oh-my-zsh ==="
-    cd ~ && omz update
-
     echo -e "\n=== Updating mise ==="
     cd ~ && mise up
 
@@ -116,6 +113,9 @@ upallthethings() {
 
     echo -e "\n=== Recompiling everything ==="
     compilecustom
+
+    echo -e "\n=== Updating oh-my-zsh ==="
+    cd ~ && omz update
 
     echo -e "\n✓ All updates complete! Reload your shell with: omz reload"
   )

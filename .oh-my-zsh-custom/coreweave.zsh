@@ -21,7 +21,6 @@ SOCKS_PROXY_PORT=9999
 # Proxy bypass list for chrome_proxy
 PROXY_NO_PROXY="localhost,127.0.0.0/8,::1,www.*,google.*,docs.*,graphana.*,awx.*,slack*,login.*,git*,teleport.*,vault.,okta.,chat.*,mail.*,notion.*,coreweave.*,*.com,*.org,*.net,*.so,10.37.0.0/16,10.39.0.0/16,10.61.0.0/16,10.65.0.0/16,10.31.0.0/16,10.35.0.0/16"
 
-
 # ============================================================================
 # HELPER FUNCTIONS (Internal - prefixed with _)
 # ============================================================================
@@ -83,14 +82,8 @@ export TELEPORT_PROXY_NA="teleport.na.int.coreweave.com:443"
 export TELEPORT_LOGIN_BIND_ADDR="localhost:8200"
 export GOPRIVATE='github.com/coreweave/*,bsr.core-services.ingress.coreweave.com/*'
 
-# cwctl completions are now sourced from ~/.oh-my-zsh-custom/completions/_cwctl
-# Generated via: update-completions or compilecustom
-#autoload -U +X bashcompinit && bashcompinit
-#complete -C /Users/cprivitere/go/bin/infractl infractl
-
-
-alias intd="infractl nt delete --automerge"
-alias inta="infractl nt add --automerge"
+# Yanl metrics datasource
+export YANL_DATA_SOURCE_URIS="http://vmui.us-east.int.coreweave.com/select/0/prometheus,http://vmui.eu-south.int.coreweave.com/select/0/prometheus,http://vmui.us-west.int.coreweave.com/select/0/prometheus,http://vmui.us-lab.int.coreweave.com/select/0/prometheus"
 
 # VPN STUFF
 
@@ -163,9 +156,10 @@ local state="STATE:metadata.labels['node\.coreweave\.cloud\/state']"
 local taint="TAINT:spec.taints[?(@)].effect"
 local admincond="ADMINCOND:metadata.annotations['cwnc\.coreweave\.com\/admin-conditions']"
 local draining="DRAINING:metadata.annotations['draino\.coreweave\.cloud\/draining']"
+local pendingstate="PENDINGSTATE:metadata.labels['node\.coreweave\.cloud\/pending-state']"
 
 # Quick node view with common columns
-alias nodes="k get nodes -o=custom-columns=\"${name},${node_ip},${ready},${cordon},${taint},${draining},${ncore},${payload},${k8sversion},${owner},${state},${reserved},${cluster},${rack},${ru}\""
+alias nodes="k get nodes -o=custom-columns=\"${name},${node_ip},${ready},${cordon},${taint},${draining},${ncore},${payload},${k8sversion},${owner},${state},${pendingstate},${reserved},${cluster},${rack},${ru}\""
 alias nodes2="k get nodes -o=custom-columns=\"${name},${node_ip},${ready},${cordon},${taint},${owner},${state},${reserved},${cluster}\""
 
 
