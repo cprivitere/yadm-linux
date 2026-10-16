@@ -16,7 +16,7 @@ node-root() {
 }
 
 # Man page configuration
-export MANPAGER="env BATMAN_IS_BEING_MANPAGER=yes /bin/bash $HOMEBREW_PREFIX/bin/batman"
+export MANPAGER="env BATMAN_IS_BEING_MANPAGER=yes /home/${USERNAME}/.local/share/mise/shims/batman"
 export MANROFFOPT="-c"
 
 # Load kubectl aliases if available

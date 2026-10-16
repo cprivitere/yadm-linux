@@ -77,7 +77,7 @@ ZSH_CUSTOM=~/.oh-my-zsh-custom
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew git vi-mode aliases common-aliases docker fzf gh golang terraform tmux zsh-autosuggestions fast-syntax-highlighting mise eza uv helm kubectl)
+plugins=(brew mise git vi-mode aliases common-aliases docker fzf gh golang terraform tmux zsh-autosuggestions fast-syntax-highlighting eza uv helm kubectl)
 
 # Add zsh-completions to fpath BEFORE sourcing oh-my-zsh (to avoid double compinit)
 #fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/completions
